@@ -1,0 +1,5 @@
+<div *ngIf="(pokemon | async) as pokemonList">
+  <div *ngFor="let simplePokemon of pokemonList">
+    {{simplePokemon.name}}
+  </div>
+</div>
