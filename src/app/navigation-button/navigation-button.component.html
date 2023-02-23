@@ -1,2 +1,6 @@
-<button class="w-32 mr-2" [routerLink]="link" mat-flat-button
-        [color]="router.url === link ? 'primary' : null">{{text}}</button>
+<button class="w-32 mr-2"
+        mat-flat-button
+        [routerLink]="link"
+        [color]="isLinkActive() ? 'primary' : null">
+  {{text}}
+</button>

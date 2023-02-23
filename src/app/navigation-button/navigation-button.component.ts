@@ -12,4 +12,8 @@ export class NavigationButtonComponent {
 
   constructor(public router: Router) {
   }
+
+  isLinkActive(): boolean {
+    return !!this.link && this.router.url.includes(this.link);
+  }
 }

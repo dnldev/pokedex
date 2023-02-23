@@ -12,6 +12,8 @@ import {MatToolbar, MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { NavigationButtonComponent } from './navigation-button/navigation-button
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatGridListModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

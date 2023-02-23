@@ -2,27 +2,27 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {PokemonResponse, SimplePokemon} from "../types";
-
-export const BASE_URL = 'https://pokeapi.co/api/v2';
-
+import { PokemonClient, Pokemon } from "pokenode-ts";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
-  fetchNextPokemonUri = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=30';
+  private pokemonClient: PokemonClient;
 
-  constructor(private http: HttpClient) {
+  constructor() {
+    this.pokemonClient = new PokemonClient();
   }
 
-  getPokemon(): Observable<SimplePokemon[]> {
-    return new Observable<SimplePokemon[]>(subscriber => {
-      this.http.get(this.fetchNextPokemonUri).subscribe(response => {
-        const pokemonResponse = response as PokemonResponse;
-        this.fetchNextPokemonUri = pokemonResponse.next;
-        subscriber.next(pokemonResponse.results);
-      });
-    })
+  async getPokemon(offset = 0, limit = 20): Promise<Pokemon[]> {
+    const pokemon: Pokemon[] = [];
+    for (const {name} of (await this.pokemonClient.listPokemons(offset, limit)).results) {
+      pokemon.push(await this.pokemonClient.getPokemonByName(name));
+    }
+    return pokemon;
+  }
 
+  async getPokemonById(pokemonId: number): Promise<Pokemon> {
+    return this.pokemonClient.getPokemonById(pokemonId);
   }
 }

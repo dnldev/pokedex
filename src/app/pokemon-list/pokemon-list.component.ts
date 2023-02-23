@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {PokemonService} from "../services/pokemon.service";
-import {Observable} from "rxjs";
-import {SimplePokemon} from "../types";
+import {Pokemon} from "pokenode-ts";
+import {Router} from "@angular/router";
+
+const ELEMENTS_PER_PAGE = 20;
 
 @Component({
   selector: 'pokedex-pokemon-list',
@@ -9,9 +11,24 @@ import {SimplePokemon} from "../types";
   styleUrls: ['./pokemon-list.component.scss']
 })
 export class PokemonListComponent {
-  pokemon: Observable<SimplePokemon[]>;
+  currentLimit = 0;
+  pokemon: Promise<Pokemon[]>;
 
-  constructor(pokemonService: PokemonService) {
+  constructor(private pokemonService: PokemonService, private router: Router) {
     this.pokemon = pokemonService.getPokemon();
+  }
+
+  loadNext() {
+    this.currentLimit += ELEMENTS_PER_PAGE;
+    this.pokemon = this.pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
+  }
+
+  loadPrevious() {
+    this.currentLimit -= ELEMENTS_PER_PAGE;
+    this.pokemon = this.pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
+  }
+
+  navigateToPokemonDetail(pokemonId: number) {
+    this.router.navigate(['/pokemon-detail'], {queryParams: {'pokemonId': pokemonId}});
   }
 }

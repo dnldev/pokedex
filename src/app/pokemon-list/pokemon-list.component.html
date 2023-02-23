@@ -1,5 +1,21 @@
-<div *ngIf="(pokemon | async) as pokemonList">
-  <div *ngFor="let simplePokemon of pokemonList">
-    {{simplePokemon.name}}
+<ng-container>
+  <mat-grid-list *ngIf="(pokemon | async) as pokemonList" cols="4" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let pokemon of pokemonList">
+      <h3>{{pokemon.name}}</h3>
+      <img class="cursor-pointer"
+           [alt]="pokemon.name"
+           [src]="pokemon.sprites.front_default"
+           [routerLink]="'../pokemon-detail'"
+           [queryParams]="{'pokemonId': pokemon.id}"
+      />
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="absolute bottom-0 right-0">
+    <button mat-flat-button [disabled]="currentLimit === 0" (click)="loadPrevious()">
+      Previous
+    </button>
+    <button mat-flat-button (click)="loadNext()">
+      Next
+    </button>
   </div>
-</div>
+</ng-container>
