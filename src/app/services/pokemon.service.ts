@@ -1,8 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {PokemonResponse, SimplePokemon} from "../types";
-import {PokemonClient, Pokemon, EvolutionClient, EvolutionChain, EvolutionDetail, NamedAPIResource} from "pokenode-ts";
+import {EvolutionClient, Pokemon, PokemonClient} from "pokenode-ts";
 
 @Injectable({
   providedIn: 'root'
