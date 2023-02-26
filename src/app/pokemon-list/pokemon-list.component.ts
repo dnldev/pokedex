@@ -3,7 +3,7 @@ import {PokemonService} from "../services/pokemon.service";
 import {Pokemon} from "pokenode-ts";
 import {Router} from "@angular/router";
 
-const ELEMENTS_PER_PAGE = 20;
+const ELEMENTS_PER_PAGE = 30;
 
 @Component({
   selector: 'pokedex-pokemon-list',
@@ -12,20 +12,20 @@ const ELEMENTS_PER_PAGE = 20;
 })
 export class PokemonListComponent {
   currentLimit = 0;
-  pokemon: Promise<Pokemon[]>;
+  pokemonPromise: Promise<Pokemon[]>;
 
   constructor(private pokemonService: PokemonService, private router: Router) {
-    this.pokemon = pokemonService.getPokemon();
+    this.pokemonPromise = pokemonService.getPokemon();
   }
 
   loadNext() {
     this.currentLimit += ELEMENTS_PER_PAGE;
-    this.pokemon = this.pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
+    this.pokemonPromise = this.pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
   }
 
   loadPrevious() {
     this.currentLimit -= ELEMENTS_PER_PAGE;
-    this.pokemon = this.pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
+    this.pokemonPromise = this.pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
   }
 
   navigateToPokemonDetail(pokemonId: number) {

@@ -1,9 +1,19 @@
 <div class="pl-32 pr-32 pt-16" *ngIf="(pokemonPromise | async) as pokemon">
   <mat-card>
     <mat-card-header class="flex content-center bg-lime-700">
-      <mat-card-title class="w-100 text-white">{{pokemon.name}}</mat-card-title>
+      <mat-card-title class="w-100 text-white">{{pokemon.name | titlecase}}</mat-card-title>
     </mat-card-header>
   </mat-card>
   <img [alt]="pokemon.name" [src]="pokemon.sprites.front_default" />
-  <img [alt]="pokemon.name" [src]="pokemon.sprites.back_default" />
+  <div *ngFor="let stat of getStatList(pokemon.stats)">
+    <span>{{statNames[stat.key]}}</span>
+    <span>{{stat.value}}</span>
+  </div>
+  <div *ngIf="!!evolutionPokemonAndLevel">
+   <div>{{pokemon.name | titlecase}} evolves into {{evolutionPokemonAndLevel.evolutionPokemon.name | titlecase}} at Level {{evolutionPokemonAndLevel.evolutionLevel}}</div>
+    <div class="inline-flex">
+      <img [alt]="pokemon.name" [src]="pokemon.sprites.front_default" />
+      <img [alt]="evolutionPokemonAndLevel.evolutionPokemon.name" [src]="evolutionPokemonAndLevel.evolutionPokemon.sprites.front_default" />
+    </div>
+  </div>
 </div>

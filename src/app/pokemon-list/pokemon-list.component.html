@@ -1,5 +1,5 @@
 <ng-container>
-  <mat-grid-list *ngIf="(pokemon | async) as pokemonList" cols="4" rowHeight="2:1">
+  <mat-grid-list *ngIf="(pokemonPromise | async) as pokemonList" cols="4" rowHeight="2:1">
     <mat-grid-tile *ngFor="let pokemon of pokemonList">
       <h3>{{pokemon.name}}</h3>
       <img class="cursor-pointer"
@@ -10,7 +10,7 @@
       />
     </mat-grid-tile>
   </mat-grid-list>
-  <div class="absolute bottom-0 right-0">
+  <div class="flex justify-end">
     <button mat-flat-button [disabled]="currentLimit === 0" (click)="loadPrevious()">
       Previous
     </button>

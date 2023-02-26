@@ -14,6 +14,9 @@ import {MatButtonModule} from "@angular/material/button";
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCardModule} from "@angular/material/card";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import {MatCardModule} from "@angular/material/card";
     MatButtonModule,
     MatGridListModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
