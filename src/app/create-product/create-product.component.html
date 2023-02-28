@@ -9,6 +9,40 @@
       <mat-label>Description</mat-label>
       <textarea formControlName="description" matInput [(ngModel)]="product.description"></textarea>
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input formControlName="price" type="number" matInput [(ngModel)]="product.price">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select [(value)]="product.category" required>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Image URL</mat-label>
+      <input formControlName="imageUrl" placeholder="https://website.com/image.png" type="url" matInput [(ngModel)]="product.imageUrl">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input formControlName="phoneNumber" type="tel" matInput [(ngModel)]="product.phoneNumber">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select</mat-label>
+      <mat-select [(value)]="product.select" required>
+        <mat-option *ngFor="let phoneSelection of phoneSelections" [value]="phoneSelection">
+          {{phoneSelection}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
+  <div>{{invalidControls}}</div>
 </ng-container>
 

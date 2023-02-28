@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import Product from "../types/Product";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'pokedex-create-product',
@@ -9,14 +9,11 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 })
 export class CreateProductComponent {
   @Input() product!: Product;
-
-  form: FormGroup;
+  @Input() form!: FormGroup;
   stringify = JSON.stringify;
-
-  constructor(builder: FormBuilder) {
-    this.form = builder.group({
-      name: new FormControl(''),
-      description: new FormControl(''),
-    });
-  }
+  categories = ['Electronics', 'Clothes', 'Blankets'];
+  phoneSelections = ['Mobile', 'Landline'];
+  get invalidControls(): string[] {
+    return Object.keys(this.form.controls).filter(controlName => this.form.controls[controlName].invalid);
+  };
 }

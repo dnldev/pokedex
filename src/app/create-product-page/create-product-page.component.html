@@ -2,10 +2,14 @@
   <pokedex-create-product
     *ngFor="let product of products; let i = index"
     [product]="products[i]"
+    [form]="forms[i]"
   >
   </pokedex-create-product>
   <button mat-flat-button (click)="addProduct()">
     Add Product
   </button>
   <div>{{stringify(products)}}</div>
+  <button mat-flat-button mat-button [disabled]="!allFormsValidAndSelectionsPresent" (click)="alert('productsValid')">
+    Submit
+  </button>
 </ng-container>
