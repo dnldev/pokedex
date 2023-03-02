@@ -1,21 +1,23 @@
-<ng-container>
-  <mat-grid-list *ngIf="(pokemonPromise | async) as pokemonList" cols="4" rowHeight="2:1">
+<div class="p-4" *ngIf="(pokemonPromise | async) as pokemonList">
+  <mat-grid-list cols="5" rowHeight="2:1" gutterSize="16">
     <mat-grid-tile *ngFor="let pokemon of pokemonList">
-      <h3>{{pokemon.name}}</h3>
-      <img class="cursor-pointer"
-           [alt]="pokemon.name"
-           [src]="pokemon.sprites.front_default"
-           [routerLink]="'../pokemon-detail'"
-           [queryParams]="{'pokemonId': pokemon.id}"
-      />
+      <mat-card class="p-2 cursor-pointer"
+                [routerLink]="'../pokemon-detail'"
+                [queryParams]="{'pokemonId': pokemon.id}">
+        <mat-card-header>
+          <img [alt]="pokemon.name"
+               [src]="pokemon.sprites.front_default"
+          /></mat-card-header>
+        <mat-card-title>{{pokemon.name}}</mat-card-title>
+      </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
-  <div class="flex justify-end">
+  <div class="mt-12 flex justify-end">
     <button mat-flat-button [disabled]="currentLimit === 0" (click)="loadPrevious()">
       Previous
     </button>
-    <button mat-flat-button (click)="loadNext()">
+    <button class="ml-2" mat-flat-button [disabled]="noMoreElements(pokemonList)" (click)="loadNext()">
       Next
     </button>
   </div>
-</ng-container>
+</div>

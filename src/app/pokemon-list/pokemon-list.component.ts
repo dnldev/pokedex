@@ -15,7 +15,11 @@ export class PokemonListComponent {
   pokemonPromise: Promise<Pokemon[]>;
 
   constructor(private pokemonService: PokemonService, private router: Router) {
-    this.pokemonPromise = pokemonService.getPokemon();
+    this.pokemonPromise = pokemonService.getPokemon(this.currentLimit, ELEMENTS_PER_PAGE);
+  }
+
+  noMoreElements(pokemon: Pokemon[]): boolean {
+    return pokemon.length !== ELEMENTS_PER_PAGE;
   }
 
   loadNext() {

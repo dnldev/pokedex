@@ -13,7 +13,7 @@ export class PokemonService {
     this.evolutionClient = new EvolutionClient();
   }
 
-  async getPokemon(offset = 0, limit = 20): Promise<Pokemon[]> {
+  async getPokemon(offset: number, limit: number): Promise<Pokemon[]> {
     const pokemon: Pokemon[] = [];
     for (const {name} of (await this.pokemonClient.listPokemons(offset, limit)).results) {
       pokemon.push(await this.pokemonClient.getPokemonByName(name));
@@ -36,17 +36,18 @@ export class PokemonService {
     // id is second last part because url ends with '/' so parts ends with empty string
     const evolutionChainId = evolutionChainUrlParts[evolutionChainUrlParts.length - 2] as unknown as number;
     const evolutionChain = await this.evolutionClient.getEvolutionChainById(evolutionChainId);
-    console.log(evolutionChain);
     let evolvesTo = evolutionChain.chain.evolves_to[0];
 
-    while (evolvesTo.species.name !== speciesName) {
-      evolvesTo = evolvesTo.evolves_to[0];
-      if (!evolvesTo) {
-        return null;
+    if (evolutionChain.chain.species.name !== speciesName) {
+      while (evolvesTo.species.name !== speciesName) {
+        evolvesTo = evolvesTo.evolves_to[0];
+        if (!evolvesTo) {
+          return null;
+        }
       }
-    }
 
-    evolvesTo = evolvesTo.evolves_to[0];
+      evolvesTo = evolvesTo.evolves_to[0];
+    }
 
     return {
       evolutionName: evolvesTo.species.name,

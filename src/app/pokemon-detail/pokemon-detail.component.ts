@@ -39,6 +39,7 @@ export class PokemonDetailComponent implements OnInit {
     this.pokemonPromise?.then(pokemon => {
       this.pokemonService.getEvolutionNameAndLevelByName(pokemon.name)
         .then((evolution) => {
+          console.log(evolution);
           if (evolution == null) {
             return;
           }

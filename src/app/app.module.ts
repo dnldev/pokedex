@@ -21,6 +21,9 @@ import { CreateProductPageComponent } from './create-product-page/create-product
 import { CreateProductComponent } from './create-product/create-product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import {MatSelectModule} from "@angular/material/select";
     FormsModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
