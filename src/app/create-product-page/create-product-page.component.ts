@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import Product from "../types/Product";
+import {getLocalStorageProducts, Product} from "../types/Product";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+
+export const PRODUCTS_LOCAL_STORAGE_KEY = 'products';
 
 @Component({
   selector: 'pokedex-create-product-page',
@@ -10,11 +12,11 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 export class CreateProductPageComponent {
   products = [new Product()];
   forms: FormGroup[];
-  phoneNumberRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
+  phoneNumberRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
 
   stringify = JSON.stringify;
   alert = alert;
-  private imageUrlRegex = /(http(s?):)([/.\w\s-])*\.(?:jpg|gif|png|jpeg)/i;
+  private imageUrlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)\.(?:jpg|gif|png|jpeg)/i;
 
   constructor(private builder: FormBuilder) {
     this.forms = [this.getProductFormGroup()];
@@ -58,4 +60,15 @@ export class CreateProductPageComponent {
     return this.forms.every(form => form.valid) && this.products.every(product => product.category && product.select);
   }
 
+  saveProducts() {
+    if (this.allFormsValidAndSelectionsPresent) {
+      this.products = [...getLocalStorageProducts(), ...this.products];
+      localStorage.setItem(PRODUCTS_LOCAL_STORAGE_KEY, JSON.stringify(this.products));
+      alert('Successfully stored products!');
+      this.products = [new Product()];
+      this.forms = [this.getProductFormGroup()];
+    } else {
+      alert('Input not correct!');
+    }
+  }
 }
