@@ -12,7 +12,6 @@ export class CreateProductPageComponent {
   forms: FormGroup[];
   phoneNumberRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
 
-  stringify = JSON.stringify;
   alert = alert;
   private imageUrlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)\.(?:jpg|gif|png|jpeg)/i;
 

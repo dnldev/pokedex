@@ -1,5 +1,14 @@
 import {Injectable} from '@angular/core';
-import {EvolutionClient, Pokemon, PokemonClient} from "pokenode-ts";
+import {
+  EvolutionClient,
+  Move,
+  MoveClient,
+  Pokemon,
+  PokemonClient,
+  PokemonSpecies,
+  PokemonType,
+  TypeRelations
+} from "pokenode-ts";
 
 @Injectable({
   providedIn: 'root'
@@ -7,10 +16,12 @@ import {EvolutionClient, Pokemon, PokemonClient} from "pokenode-ts";
 export class PokemonService {
   private readonly pokemonClient: PokemonClient;
   private readonly evolutionClient: EvolutionClient;
+  private readonly moveClient: MoveClient;
 
   constructor() {
     this.pokemonClient = new PokemonClient();
     this.evolutionClient = new EvolutionClient();
+    this.moveClient = new MoveClient();
   }
 
   async getPokemon(offset: number, limit: number): Promise<Pokemon[]> {
@@ -56,5 +67,13 @@ export class PokemonService {
       evolutionName: evolvesTo.species.name,
       evolutionLevel: evolvesTo.evolution_details[0].min_level as unknown as number
     };
+  }
+
+  async getDamageRelationsOfType(type: PokemonType): Promise<TypeRelations> {
+    return (await this.pokemonClient.getTypeByName(type.type.name)).damage_relations;
+  }
+
+  async getSpeciesById(pokemonId: number): Promise<PokemonSpecies> {
+    return await this.pokemonClient.getPokemonSpeciesById(pokemonId);
   }
 }

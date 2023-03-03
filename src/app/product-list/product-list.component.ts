@@ -7,7 +7,5 @@ import {getLocalStorageProducts} from "../types/Product";
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
-  stringify = JSON.stringify;
-
   localStorageProducts = getLocalStorageProducts;
 }

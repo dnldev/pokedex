@@ -1,6 +1,7 @@
 <div class="pl-32 pr-32 pt-16" *ngIf="(pokemonPromise | async) as pokemon">
   <mat-card>
-    <mat-card-header class="flex justify-center items-center bg-lime-700">
+    <mat-card-header class="flex justify-center items-center"
+                     [style]="{backgroundColor: getFirstTypeColorFromPokemon(pokemon)}">
       <mat-card-title class="w-100 text-white text-xl">
         {{pokemon.name | titlecase}} #{{pokemon.id}}
       </mat-card-title>
@@ -25,7 +26,17 @@
 
     </section>
 
-    <mat-divider></mat-divider>
+    <section>
+      <h2>Profile</h2>
+      <div class="flex justify-between w-full">
+        <div class="grid grid-cols-2 mt-4 w-full">
+          <div class="pl-8 pr-8 inline-flex w-full justify-between"
+               *ngFor="let spec of profile | keyvalue">
+            <strong>{{spec.key}}:</strong><span class="ml-4">{{spec.value}}</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section>
       <h2>Evolutions</h2>
@@ -53,8 +64,19 @@
       </ng-template>
     </section>
 
-    <mat-divider></mat-divider>
+    <section>
+      <h2>Damage When Attacked</h2>
+      <div class="flex grid grid-cols-2 justify-items-center">
+        <div>
+          <h3>Strong Against:</h3>
+          <pokedex-pokemon-type-card *ngFor="let type of strongAgainst" [width]="200" [pokemonType]="type"></pokedex-pokemon-type-card>
+        </div>
+        <div>
+          <h3>Weak Against:</h3>
+          <pokedex-pokemon-type-card *ngFor="let type of weakAgainst" [width]="200" [pokemonType]="type"></pokedex-pokemon-type-card>
+        </div>
+      </div>
+    </section>
 
-    <div>{{log(pokemon)}}</div>
   </div>
 </div>
