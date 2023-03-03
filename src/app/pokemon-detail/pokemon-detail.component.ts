@@ -35,6 +35,7 @@ export class PokemonDetailComponent {
   evolutionPokemonAndLevel: { evolutionPokemon: Pokemon; evolutionLevel: number | null } | null = null;
   strongAgainst: PokemonTypeEnum[] = [];
   weakAgainst: PokemonTypeEnum[] = [];
+  flavorText = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private pokemonService: PokemonService) {
     this.route.queryParams
@@ -48,6 +49,7 @@ export class PokemonDetailComponent {
         this.pokemonPromise = pokemonService.getPokemonById(this.pokemonId);
         this.fillProfileData(this.pokemonPromise);
         this.fillStrengthAndWeakness(this.pokemonPromise);
+        this.fillFlavorText(this.pokemonId);
       });
   }
 
@@ -93,7 +95,6 @@ export class PokemonDetailComponent {
     return typeColors[pokemon.types[0].type.name as PokemonTypeEnum];
   }
 
-
   async fillStrengthAndWeakness(pokemonPromise: Promise<Pokemon>) {
     const pokemon = await pokemonPromise;
     const damageRelationPromises = pokemon.types.map(type => this.pokemonService.getDamageRelationsOfType(type));
@@ -111,5 +112,9 @@ export class PokemonDetailComponent {
         ].map(relation => relation.name as PokemonTypeEnum));
       })
     });
+  }
+
+  async fillFlavorText(pokemonId: number) {
+    this.flavorText = await this.pokemonService.getFlavorText(pokemonId);
   }
 }

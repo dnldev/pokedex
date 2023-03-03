@@ -76,4 +76,8 @@ export class PokemonService {
   async getSpeciesById(pokemonId: number): Promise<PokemonSpecies> {
     return await this.pokemonClient.getPokemonSpeciesById(pokemonId);
   }
+
+  async getFlavorText(pokemonId: number): Promise<string> {
+    return (await this.getSpeciesById(pokemonId)).flavor_text_entries[0].flavor_text;
+  }
 }
