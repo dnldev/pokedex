@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import {getLocalStorageProducts, Product} from "../types/Product";
+import {getLocalStorageProducts, Product, PRODUCTS_LOCAL_STORAGE_KEY} from "../types/Product";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-
-export const PRODUCTS_LOCAL_STORAGE_KEY = 'products';
 
 @Component({
   selector: 'pokedex-create-product-page',

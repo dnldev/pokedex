@@ -1,4 +1,4 @@
-import {PRODUCTS_LOCAL_STORAGE_KEY} from "../create-product-page/create-product-page.component";
+export const PRODUCTS_LOCAL_STORAGE_KEY = 'products';
 
 export class Product {
   name: string;
