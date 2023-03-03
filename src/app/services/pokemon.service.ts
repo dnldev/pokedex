@@ -30,16 +30,19 @@ export class PokemonService {
   }
 
   // return null if there is no more evolutions
-  async getEvolutionNameAndLevelByName(speciesName: string): Promise<{ evolutionName: string; evolutionLevel: number } | null> {
-    const species = await this.pokemonClient.getPokemonSpeciesByName(speciesName);
+  async getEvolutionNameAndLevelById(pokemonId: number): Promise<{ evolutionName: string; evolutionLevel: number } | null> {
+    const species = await this.pokemonClient.getPokemonSpeciesById(pokemonId);
     const evolutionChainUrlParts = species.evolution_chain.url.split('/');
     // id is second last part because url ends with '/' so parts ends with empty string
     const evolutionChainId = evolutionChainUrlParts[evolutionChainUrlParts.length - 2] as unknown as number;
     const evolutionChain = await this.evolutionClient.getEvolutionChainById(evolutionChainId);
     let evolvesTo = evolutionChain.chain.evolves_to[0];
+    if (evolvesTo == null) {
+      return null;
+    }
 
-    if (evolutionChain.chain.species.name !== speciesName) {
-      while (evolvesTo.species.name !== speciesName) {
+    if (evolutionChain.chain.species.name !== species.name) {
+      while (evolvesTo.species.name !== species.name) {
         evolvesTo = evolvesTo.evolves_to[0];
         if (!evolvesTo) {
           return null;
@@ -49,7 +52,7 @@ export class PokemonService {
       evolvesTo = evolvesTo.evolves_to[0];
     }
 
-    return {
+    return !evolvesTo ? null : {
       evolutionName: evolvesTo.species.name,
       evolutionLevel: evolvesTo.evolution_details[0].min_level as unknown as number
     };

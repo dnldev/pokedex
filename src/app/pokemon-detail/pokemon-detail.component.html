@@ -1,39 +1,60 @@
 <div class="pl-32 pr-32 pt-16" *ngIf="(pokemonPromise | async) as pokemon">
   <mat-card>
-    <mat-card-header class="flex content-center bg-lime-700">
-      <mat-card-title class="w-100 text-white">{{pokemon.name | titlecase}} #{{pokemon.id}}</mat-card-title>
+    <mat-card-header class="flex justify-center items-center bg-lime-700">
+      <mat-card-title class="w-100 text-white text-xl">
+        {{pokemon.name | titlecase}} #{{pokemon.id}}
+      </mat-card-title>
     </mat-card-header>
   </mat-card>
   <div class="p-4">
-    <img [alt]="pokemon.name" [src]="pokemon.sprites.front_default"/>
-
-    <mat-divider></mat-divider>
-
     <section>
-      <h3>Stats</h3>
-      <div class="mt-4" *ngFor="let stat of getStatList(pokemon.stats)">
-        <span>{{statNames[stat.key]}}: {{stat.value}}</span>
-        <mat-progress-bar color="accent" mode="determinate" [value]="stat.value"></mat-progress-bar>
+      <h2>Stats</h2>
+      <div class="inline-flex items-center justify-around w-full mt-4">
+        <img class="w-60 h-60" [alt]="pokemon.name" [src]="pokemon.sprites.front_default"/>
+        <aside class="grow mr-8 ml-8">
+          <div class="mb-2 inline-flex space-x-5">
+            <pokedex-pokemon-type-card *ngFor="let type of getTypeEnumListFromApiTypes(pokemon.types)"
+                                       [pokemonType]="type"></pokedex-pokemon-type-card>
+          </div>
+          <div class="mt-1" *ngFor="let stat of getStatList(pokemon.stats)">
+            <span>{{statNames[stat.key]}}: {{stat.value}}</span>
+            <mat-progress-bar color="accent" mode="determinate" [value]="stat.value"></mat-progress-bar>
+          </div>
+        </aside>
       </div>
+
     </section>
 
     <mat-divider></mat-divider>
 
     <section>
-      <h3>Evolutions</h3>
+      <h2>Evolutions</h2>
       <div *ngIf="evolutionPokemonAndLevel; else noEvolution">
-        <div>{{pokemon.name | titlecase}} evolves into {{evolutionPokemonAndLevel.evolutionPokemon.name | titlecase}} at
-          Level {{evolutionPokemonAndLevel.evolutionLevel}}</div>
-        <div class="inline-flex items-center">
-          <img [alt]="pokemon.name" [src]="pokemon.sprites.front_default"/>
-          <mat-icon aria-hidden="false" fontIcon="arrow_right_alt"></mat-icon>
-          <img [alt]="evolutionPokemonAndLevel.evolutionPokemon.name"
+        <div class="inline-flex items-center justify-around w-full">
+          <img class="w-60 h-60" [alt]="pokemon.name" [src]="pokemon.sprites.front_default"/>
+          <mat-icon class="evolution-icon" aria-hidden="false" fontIcon="arrow_right_alt"></mat-icon>
+          <img class="w-60 h-60" [alt]="evolutionPokemonAndLevel.evolutionPokemon.name"
                [src]="evolutionPokemonAndLevel.evolutionPokemon.sprites.front_default"/>
+        </div>
+        <div class="inline-flex justify-center w-full">
+          <span>{{pokemon.name | titlecase}}
+            evolves into {{evolutionPokemonAndLevel.evolutionPokemon.name | titlecase}}</span>
+          &nbsp;
+          <strong *ngIf="evolutionPokemonAndLevel.evolutionLevel; else noLevelEvolution">
+            at Level {{evolutionPokemonAndLevel.evolutionLevel}}
+          </strong>
+          <ng-template #noLevelEvolution>
+            <strong>under special circumstances</strong>
+          </ng-template>
         </div>
       </div>
       <ng-template #noEvolution>
         <div>{{pokemon.name | titlecase}} is the final evolution</div>
       </ng-template>
     </section>
+
+    <mat-divider></mat-divider>
+
+    <div>{{log(pokemon)}}</div>
   </div>
 </div>

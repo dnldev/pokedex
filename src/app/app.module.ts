@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatIconModule} from "@angular/material/icon";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { PokemonTypeCardComponent } from './pokemon-type-card/pokemon-type-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import {MatIconModule} from "@angular/material/icon";
     CreateProductPageComponent,
     CreateProductComponent,
     ProductListComponent,
+    PokemonTypeCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,12 @@ import {MatIconModule} from "@angular/material/icon";
     MatDividerModule,
     MatProgressBarModule,
     MatIconModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

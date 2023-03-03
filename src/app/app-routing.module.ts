@@ -7,8 +7,8 @@ import {ProductListComponent} from "./product-list/product-list.component";
 import {getLocalStorageProducts} from "./types/Product";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'pokemon-list', pathMatch: 'full' },
-  { path: 'pokemon-list', component: PokemonListComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: PokemonListComponent },
   { path: 'pokemon-detail', component: PokemonDetailComponent },
   { path: 'create-product', component: CreateProductPageComponent },
   { path: 'product-list', component: ProductListComponent, canActivate: [() => getLocalStorageProducts().length > 0] },
