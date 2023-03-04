@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {getLocalStorageProducts, Product, PRODUCTS_LOCAL_STORAGE_KEY} from "../types/Product";
+import {Product, pushProductsToLocalStorage} from "../types/Product";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -59,8 +59,7 @@ export class CreateProductPageComponent {
 
   saveProducts() {
     if (this.allFormsValidAndSelectionsPresent) {
-      this.products = [...getLocalStorageProducts(), ...this.products];
-      localStorage.setItem(PRODUCTS_LOCAL_STORAGE_KEY, JSON.stringify(this.products));
+      pushProductsToLocalStorage(this.products);
       alert('Successfully stored products!');
       this.products = [new Product()];
       this.forms = [this.getProductFormGroup()];

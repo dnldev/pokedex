@@ -17,3 +17,9 @@ export function getLocalStorageProducts(): Product[] {
   }
   return JSON.parse(localStorageProducts) as Product[];
 }
+
+export function pushProductsToLocalStorage(products: Product[]) {
+  const localStorageProducts = localStorage.getItem(PRODUCTS_LOCAL_STORAGE_KEY);
+  const existingProducts = !!localStorageProducts ? JSON.parse(localStorageProducts) as Product[] : [];
+  localStorage.setItem(PRODUCTS_LOCAL_STORAGE_KEY, JSON.stringify([...existingProducts, ...products]));
+}

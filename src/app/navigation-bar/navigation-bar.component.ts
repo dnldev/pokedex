@@ -15,8 +15,11 @@ export class NavigationBarComponent {
     private router: Router,
   ) {}
 
-  isAdmin = () => this.userService.isAdmin;
   search: string = '';
+
+  get isAdmin() {
+    return this.userService.isAdmin;
+  }
 
   async triggerSearch() {
     const searchResultPokemon = await this.pokemonService.getPokemonByName(this.search);
